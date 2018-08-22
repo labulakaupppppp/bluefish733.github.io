@@ -108,24 +108,24 @@
 
 
 
-  <meta name="description" content="用GET()还是POST()呢？">
+  <meta name="description" content="浏览器从来没有得到过Session对象T T">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Http请求 | GET VS POST">
-<meta property="og:url" content="http://bluefish733.github.io/2018/08/22/HTTPGET&POST/index.html">
+<meta property="og:title" content="深入理解HTTP Session[转]">
+<meta property="og:url" content="http://bluefish733.github.io/2018/08/22/session/index.html">
 <meta property="og:site_name" content="Jinling Zhang">
-<meta property="og:description" content="用GET()还是POST()呢？">
+<meta property="og:description" content="浏览器从来没有得到过Session对象T T">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-22T06:29:16.673Z">
+<meta property="og:updated_time" content="2018-08-22T07:08:26.031Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Http请求 | GET VS POST">
-<meta name="twitter:description" content="用GET()还是POST()呢？">
+<meta name="twitter:title" content="深入理解HTTP Session[转]">
+<meta name="twitter:description" content="浏览器从来没有得到过Session对象T T">
 
 
 
 
 
 
-  <link rel="canonical" href="http://bluefish733.github.io/2018/08/22/HTTPGET&POST/"/>
+  <link rel="canonical" href="http://bluefish733.github.io/2018/08/22/session/"/>
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>Http请求 | GET VS POST | Jinling Zhang</title>
+  <title>深入理解HTTP Session[转] | Jinling Zhang</title>
   
 
 
@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bluefish733.github.io/2018/08/22/HTTPGET&POST/">
+    <link itemprop="mainEntityOfPage" href="http://bluefish733.github.io/2018/08/22/session/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bluefish733">
@@ -321,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Http请求 | GET VS POST
+          <h1 class="post-title" itemprop="name headline">深入理解HTTP Session[转]
               
             
           </h1>
@@ -346,7 +346,7 @@
                 
               
 
-              <time title="Created: 2018-08-22 14:29:16" itemprop="dateCreated datePublished" datetime="2018-08-22T14:29:16+08:00">2018-08-22</time>
+              <time title="Created: 2018-08-22 15:08:26" itemprop="dateCreated datePublished" datetime="2018-08-22T15:08:26+08:00">2018-08-22</time>
             
 
             
@@ -380,8 +380,26 @@
       
 
       
-        <p>用GET()还是POST()呢？<br><a id="more"></a></p>
-<h2 id="Http是基于TCP-IP协议的，GET和POST方法当时也要遵循TCP-IP数据传输协议。"><a href="#Http是基于TCP-IP协议的，GET和POST方法当时也要遵循TCP-IP数据传输协议。" class="headerlink" title="Http是基于TCP/IP协议的，GET和POST方法当时也要遵循TCP/IP数据传输协议。"></a>Http是基于TCP/IP协议的，GET和POST方法当时也要遵循TCP/IP数据传输协议。</h2><p>GET将信息放在url里面，POST将信息放在request body里面，本质都是TCP/IP协议里面传送数据。<br>之前看一篇博客，地址忘记了，他打了比方：如果将数据传输比喻成货车拉货的话，那么GET相当于把货放在车顶绑好；POST相当于把货放在货箱里面运输。除了货放的位置形式不同之外也会有数据量规范大小的区别。但实质都是一样的，那就是运货（传输数据）。<br>想起来最开始做项目的时候，有点手忙脚乱的去问秦和LK我用哪个方法好，LK说其实都一样的，这个我们自己定。</p>
+        <p>浏览器从来没有得到过Session对象T T<br><a id="more"></a><br>session在web开发中是一个非常重要的概念，这个概念很抽象，很难定义，也是最让人迷惑的一个名词，也是最多被滥用的名字之一，在不同的场合，session一次的含义也很不相同。这里只探讨HTTP Session。</p>
+<p>为了说明问题，这里基于Java Servlet理解Session的概念与原理，这里所说Servlet已经涵盖了JSP技术，因为JSP最终也会被编译为Servlet，两者有着相同的本质。</p>
+<p>在Java中，HTTP的Session对象用javax.servlet.http.HttpSession来表示。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>Session代表服务器与浏览器的一次会话过程，这个过程是连续的，也可以时断时续的。在Servlet中，session指的是HttpSession类的对象，这个概念到此结束了，也许会很模糊，但只有看完本文，才能真正有个深刻理解。</p>
+<h2 id="Session创建的时间"><a href="#Session创建的时间" class="headerlink" title="Session创建的时间"></a>Session创建的时间</h2><p>一个常见的误解是以为session在有客户端访问时就被创建，然而事实是直到某server端程序调用 HttpServletRequest.getSession(true)这样的语句时才被创建，注意如果JSP没有显示的使用 &lt;% @page session=”false”%&gt; 关闭session，则JSP文件在编译成Servlet时将会自动加上这样一条语句 HttpSession session = HttpServletRequest.getSession(true);这也是JSP中隐含的 session对象的来历。<br>由于session会消耗内存资源，因此，如果不打算使用session，应该在所有的JSP中关闭它。</p>
+<h2 id="Session删除的时间"><a href="#Session删除的时间" class="headerlink" title="Session删除的时间"></a>Session删除的时间</h2><p>1）Session超时：超时指的是连续一定时间服务器没有收到该Session所对应客户端的请求，并且这个时间超过了服务器设置的Session超时的最大时间。<br>2）程序调用HttpSession.invalidate()<br>3）服务器关闭或服务停止</p>
+<h2 id="Session存放的地方"><a href="#Session存放的地方" class="headerlink" title="Session存放的地方"></a>Session存放的地方</h2><p>服务器端的内存中。不过session可以通过特殊的方式做持久化管理。</p>
+<h2 id="session的id是从哪里来的，sessionID是如何使用的"><a href="#session的id是从哪里来的，sessionID是如何使用的" class="headerlink" title="session的id是从哪里来的，sessionID是如何使用的"></a>session的id是从哪里来的，sessionID是如何使用的</h2><p>当客户端第一次请求session对象时候，服务器会为客户端创建一个session，并将通过特殊算法算出一个session的ID，用来标识该session对象，当浏览器下次（session继续有效时）请求别的资源的时候，浏览器会偷偷地将sessionID放置到请求头中，服务器接收到请求后就得到该请求的sessionID，服务器找到该id的session返还给请求者（Servlet）使用。一个会话只能有一个session对象，对session来说是只认id不认人。</p>
+<h2 id="其他关于Session"><a href="#其他关于Session" class="headerlink" title="其他关于Session"></a>其他关于Session</h2><ul>
+<li><p>session会因为浏览器的关闭而删除吗？不会，session只会通过上面提到的方式去关闭。</p>
+</li>
+<li><p>同一客户端机器多次请求同一个资源，session一样吗？一般来说，每次请求都会新创建一个session。其实，这个也不一定的，总结下：对于多标签的浏览器（比如360浏览器）来说，在一个浏览器窗口中，多个标签同时访问一个页面，session是一个。对于多个浏览器窗口之间，同时或者相隔很短时间访问一个页面，session是多个的，和浏览器的进程有关。对于一个同一个浏览器窗口，直接录入url访问同一应用的不同资源，session是一样的。</p>
+</li>
+<li><p>session是一个容器，可以存放会话过程中的任何对象。</p>
+</li>
+<li><p>session因为请求（request对象）而产生，同一个会话中多个request共享了一session对象，可以直接从请求中获取到session对象。</p>
+</li>
+<li><p>其实，session的创建和使用总在服务端，而浏览器从来都没得到过session对象。但浏览器可以请求Servlet（jsp也是Servlet）来获取session的信息。客户端浏览器真正紧紧拿到的是session ID，而这个对于浏览器操作的人来说，是不可见的，并且用户也无需关心自己处于哪个会话过程中。</p>
+</li>
+</ul>
 
       
     </div>
@@ -409,8 +427,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/22/HeyHexo/" rel="next" title="Hey，Hexo">
-                <i class="fa fa-chevron-left"></i> Hey，Hexo
+              <a href="/2018/08/22/Java基础/" rel="next" title="Java基础（更新ing）">
+                <i class="fa fa-chevron-left"></i> Java基础（更新ing）
               </a>
             
           </div>
@@ -418,10 +436,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/22/Java基础/" rel="prev" title="Java基础（更新ing）">
-                Java基础（更新ing） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -531,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Http是基于TCP-IP协议的，GET和POST方法当时也要遵循TCP-IP数据传输协议。"><span class="nav-number">1.</span> <span class="nav-text">Http是基于TCP/IP协议的，GET和POST方法当时也要遵循TCP/IP数据传输协议。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session创建的时间"><span class="nav-number">2.</span> <span class="nav-text">Session创建的时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session删除的时间"><span class="nav-number">3.</span> <span class="nav-text">Session删除的时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session存放的地方"><span class="nav-number">4.</span> <span class="nav-text">Session存放的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session的id是从哪里来的，sessionID是如何使用的"><span class="nav-number">5.</span> <span class="nav-text">session的id是从哪里来的，sessionID是如何使用的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他关于Session"><span class="nav-number">6.</span> <span class="nav-text">其他关于Session</span></a></li></ol></div>
             
 
           </div>
