@@ -383,24 +383,20 @@
       
         
           
-            <h2 id="int-amp-Integer"><a href="#int-amp-Integer" class="headerlink" title="int&amp;Integer"></a>int&amp;Integer</h2><p>在类进行初始化时int类的变量初始为0.而Integer的变量则初始化为null.</p>
-<ul>
-<li>int是基本的数据类型；Integer是int的封装类；</li>
-<li>int和Integer都可以表示某一个数值；</li>
-<li>int和Integer不能够互用，因为他们两种不同的数据类型；</li>
-<li>integer 不可以用 == 需要用equals()</li>
-</ul>
-<h2 id="String-和-StringBuffer"><a href="#String-和-StringBuffer" class="headerlink" title="String 和 StringBuffer"></a>String 和 StringBuffer</h2><p>String是字符串常量<br>StringBuffer是字符串变量</p>
-<h2 id="Java中线程安全的定义"><a href="#Java中线程安全的定义" class="headerlink" title="Java中线程安全的定义"></a>Java中线程安全的定义</h2><p>Java中线程安全的类：</p>
-<ul>
-<li>Vector（相当于一个线程安全的List)</li>
-<li>HashTable</li>
-<li>StringBuffer(相当于一个线程安全的StringBuffer)</li>
-<li>Properties继承了HashTable，也是线程安全的</li>
-</ul>
-<p>线程安全就是线程同步的意思，即如果你的代码所在的进程有多个线程在同事运行，而这些线程可能会同时运行这段代码。如果每次运行的结果都和单线程运行结果是一样的，而且其他的变量的值也和预期是一样的，就是线程安全的。<br>如果每个线程中对全局变量，静态变量只有读操作一般来说这个全局变量是安全的；如果有多个线程同时执行写操作的话就要考虑线程同步，否则就有可能影响线程安全。</p>
+          int&amp;Integer在类进行初始化时int类的变量初始为0.而Integer的变量则初始化为null.
 
-          
+int是基本的数据类型；Integer是int的封装类；
+int和Integer都可以表示某一个数值；
+int和Integer不能够互用，因为他们两种不同的数据类型；
+integer 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/22/Java基础/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -534,9 +530,15 @@
       
         
           
-            <h2 id="Http是基于TCP-IP协议的，GET和POST方法当时也要遵循TCP-IP数据传输协议。"><a href="#Http是基于TCP-IP协议的，GET和POST方法当时也要遵循TCP-IP数据传输协议。" class="headerlink" title="Http是基于TCP/IP协议的，GET和POST方法当时也要遵循TCP/IP数据传输协议。"></a>Http是基于TCP/IP协议的，GET和POST方法当时也要遵循TCP/IP数据传输协议。</h2><p>GET将信息放在url里面，POST将信息放在request body里面，本质都是TCP/IP协议里面传送数据。<br>之前看一篇博客，地址忘记了，他打了比方：如果将数据传输比喻成货车拉货的话，那么GET相当于把货放在车顶绑好；POST相当于把货放在货箱里面运输。除了货放的位置形式不同之外也会有数据量规范大小的区别。但实质都是一样的，那就是运货（传输数据）。<br>想起来最开始做项目的时候，有点手忙脚乱的去问秦和LK我用哪个方法好，LK说其实都一样的，这个我们自己定。</p>
-
-          
+          Http是基于TCP/IP协议的，GET和POST方法当时也要遵循TCP/IP数据传输协议。GET将信息放在url里面，POST将信息放在request body里面，本质都是TCP/IP协议里面传送数据。之前看一篇博客，地址忘记了，他打了比方：如果将数据传输比喻成货车拉货的话，那么GET相当于把货
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/22/HTTPGET&POST/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -674,13 +676,19 @@
       
         
           
-            <p>终于先简单的搭建好啦，写下这篇博客之前的10分钟我在做什么呢？</p>
-<h2 id="部署到github上的页面上没有样式"><a href="#部署到github上的页面上没有样式" class="headerlink" title="部署到github上的页面上没有样式"></a>部署到github上的页面上没有样式</h2><h3 id="查Hexo的官方文档"><a href="#查Hexo的官方文档" class="headerlink" title="查Hexo的官方文档.."></a>查Hexo的官方文档..</h3><p>Emm…  都是按照上面来的呀，没错呀</p>
-<p>文档: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Hexo</a></p>
-<h3 id="那么，Google一下，大家可能也遇到这样的问题嗯"><a href="#那么，Google一下，大家可能也遇到这样的问题嗯" class="headerlink" title="那么，Google一下，大家可能也遇到这样的问题嗯"></a>那么，Google一下，大家可能也遇到这样的问题嗯</h3><p>什么？让我改_config.yml配置文件？我检查过啦，没问题的</p>
-<h3 id="￥-amp-……￥"><a href="#￥-amp-……￥" class="headerlink" title="￥#%#&amp;……￥%"></a>￥#%#&amp;……￥%</h3><p>到底是怎么回事呢，去看了网页的开发者模式，发现找不到路径下的css等样式，url看起来怪怪的，好了，问题找到了，还是配置文件里面的url写错了。其实文档里面和Google中大家的经验说的都没错，只不过要结合自己的情况好好思考一下。<br>以后遇到事情也不能总是慌慌张张，相信自己能解决，自己的心就会听到说，恩，可以解决的，然后问题就真的可以解决。</p>
-
-          
+          终于先简单的搭建好啦，写下这篇博客之前的10分钟我在做什么呢？
+部署到github上的页面上没有样式查Hexo的官方文档..Emm…  都是按照上面来的呀，没错呀
+文档: Hexo
+那么，Google一下，大家可能也遇到这样的问题嗯什么？让我改_config.yml配置文件？我检查过啦，没问题的
+￥
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/22/HeyHexo/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
