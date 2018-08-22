@@ -1849,7 +1849,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #737096;
+  background: #fb0fde;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2811,4 +2811,26 @@ hr {
     width: auto;
     text-align: center;
   }
+}
+body {
+  background: url("http://p0xt50lze.bkt.clouddn.com/17-12-22/20656014.jpg");
+  background-attachment: fixed;
+  -webkit-background-size: 1600px 900px;
+}
+.main-inner {
+  margin-top: 60px;
+  padding: 60px 60px 60px 60px;
+  background: #fff;
+  min-height: 500px;
+}
+body:before {
+  content: ' ';
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url("http://p0xt50lze.bkt.clouddn.com/17-12-22/20656014.jpg");
+  background-size: 1600px 900px;
+  z-index: -1;
 }
