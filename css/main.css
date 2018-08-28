@@ -1849,7 +1849,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff7dad;
+  background: #ffff90;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2822,15 +2822,4 @@ body {
   padding: 60px 60px 60px 60px;
   background: #fff;
   min-height: 500px;
-}
-body:before {
-  content: ' ';
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: url("/images/1.jpg");
-  background-size: 1600px 1820px;
-  z-index: -1;
 }
